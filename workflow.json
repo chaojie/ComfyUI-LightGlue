@@ -1,0 +1,278 @@
+{
+  "last_node_id": 7,
+  "last_link_id": 16,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LightGlue Loader",
+      "pos": [
+        443,
+        34
+      ],
+      "size": {
+        "0": 315,
+        "1": 78
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "extractor",
+          "type": "SuperPoint",
+          "links": [
+            10
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "matcher",
+          "type": "LightGlue",
+          "links": [
+            11
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LightGlue Loader"
+      },
+      "widgets_values": [
+        "cuda"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "LightGlue Simple",
+      "pos": [
+        886,
+        200.25003051757812
+      ],
+      "size": {
+        "0": 315,
+        "1": 118
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "extractor",
+          "type": "SuperPoint",
+          "link": 10
+        },
+        {
+          "name": "matcher",
+          "type": "LightGlue",
+          "link": 11
+        },
+        {
+          "name": "image0",
+          "type": "IMAGE",
+          "link": 15
+        },
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "motionbrush",
+          "type": "STRING",
+          "links": [
+            14
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "matches",
+          "type": {},
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "points0",
+          "type": {},
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "points1",
+          "type": {},
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LightGlue Simple"
+      },
+      "widgets_values": [
+        "cuda"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "Debug (mtb)",
+      "pos": [
+        1325,
+        194
+      ],
+      "size": {
+        "0": 210,
+        "1": 586
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything_1",
+          "type": "STRING",
+          "link": 14,
+          "label": "anything_1"
+        },
+        {
+          "name": "anything_2",
+          "type": "*",
+          "link": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Debug (mtb)"
+      },
+      "widgets_values": [
+        false,
+        "[[[410.6747131347656, 294.373046875], [489.8125, 393.02203369140625]], [[413.3132629394531, 313.708984375], [491.0625, 399.27337646484375]], [[421.22894287109375, 333.044921875], [497.9375, 414.2765808105469]], [[246.204833984375, 338.318359375], [472.9375, 413.02630615234375]], [[218.9397735595703, 345.349609375], [457.9375, 411.77606201171875]], [[259.3976135253906, 349.744140625], [468.5625, 419.9028015136719]], [[356.14459228515625, 428.845703125], [472.3125, 434.2808837890625]]]"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "LoadImage",
+      "pos": [
+        452,
+        627
+      ],
+      "size": {
+        "0": 315,
+        "1": 314
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            16
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "1poet (3).jpeg",
+        "image"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "LoadImage",
+      "pos": [
+        444,
+        234
+      ],
+      "size": {
+        "0": 315,
+        "1": 314
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            15
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "1.png",
+        "image"
+      ]
+    }
+  ],
+  "links": [
+    [
+      10,
+      1,
+      0,
+      7,
+      0,
+      "SuperPoint"
+    ],
+    [
+      11,
+      1,
+      1,
+      7,
+      1,
+      "LightGlue"
+    ],
+    [
+      14,
+      7,
+      0,
+      5,
+      0,
+      "*"
+    ],
+    [
+      15,
+      3,
+      0,
+      7,
+      2,
+      "IMAGE"
+    ],
+    [
+      16,
+      4,
+      0,
+      7,
+      3,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
