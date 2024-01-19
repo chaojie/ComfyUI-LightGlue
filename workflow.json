@@ -1,6 +1,6 @@
 {
-  "last_node_id": 7,
-  "last_link_id": 16,
+  "last_node_id": 9,
+  "last_link_id": 20,
   "nodes": [
     {
       "id": 1,
@@ -55,7 +55,7 @@
         "1": 118
       },
       "flags": {},
-      "order": 3,
+      "order": 5,
       "mode": 0,
       "inputs": [
         {
@@ -71,12 +71,12 @@
         {
           "name": "image0",
           "type": "IMAGE",
-          "link": 15
+          "link": 18
         },
         {
           "name": "image1",
           "type": "IMAGE",
-          "link": 16
+          "link": 20
         }
       ],
       "outputs": [
@@ -116,46 +116,119 @@
       ]
     },
     {
-      "id": 5,
-      "type": "Debug (mtb)",
+      "id": 8,
+      "type": "ImageResize+",
       "pos": [
-        1325,
-        194
+        486,
+        218
       ],
       "size": {
-        "0": 210,
-        "1": 586
+        "0": 315,
+        "1": 170
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            18
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageResize+"
+      },
+      "widgets_values": [
+        320,
+        576,
+        "nearest",
+        false
+      ]
+    },
+    {
+      "id": 9,
+      "type": "ImageResize+",
+      "pos": [
+        700,
+        479
+      ],
+      "size": {
+        "0": 315,
+        "1": 170
       },
       "flags": {},
       "order": 4,
       "mode": 0,
       "inputs": [
         {
-          "name": "anything_1",
-          "type": "STRING",
-          "link": 14,
-          "label": "anything_1"
+          "name": "image",
+          "type": "IMAGE",
+          "link": 19
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            20
+          ],
+          "shape": 3,
+          "slot_index": 0
         },
         {
-          "name": "anything_2",
-          "type": "*",
-          "link": null
+          "name": "width",
+          "type": "INT",
+          "links": null,
+          "shape": 3
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": null,
+          "shape": 3
         }
       ],
       "properties": {
-        "Node name for S&R": "Debug (mtb)"
+        "Node name for S&R": "ImageResize+"
       },
       "widgets_values": [
-        false,
-        "[[[410.6747131347656, 294.373046875], [489.8125, 393.02203369140625]], [[413.3132629394531, 313.708984375], [491.0625, 399.27337646484375]], [[421.22894287109375, 333.044921875], [497.9375, 414.2765808105469]], [[246.204833984375, 338.318359375], [472.9375, 413.02630615234375]], [[218.9397735595703, 345.349609375], [457.9375, 411.77606201171875]], [[259.3976135253906, 349.744140625], [468.5625, 419.9028015136719]], [[356.14459228515625, 428.845703125], [472.3125, 434.2808837890625]]]"
+        320,
+        576,
+        "nearest",
+        false
       ]
     },
     {
-      "id": 4,
+      "id": 3,
       "type": "LoadImage",
       "pos": [
-        452,
-        627
+        108,
+        169
       ],
       "size": {
         "0": 315,
@@ -169,7 +242,46 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            16
+            17
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "1poet (1).jpeg",
+        "image"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "LoadImage",
+      "pos": [
+        116,
+        568
+      ],
+      "size": {
+        "0": 315,
+        "1": 314
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            19
           ],
           "shape": 3,
           "slot_index": 0
@@ -190,42 +302,37 @@
       ]
     },
     {
-      "id": 3,
-      "type": "LoadImage",
+      "id": 5,
+      "type": "Debug (mtb)",
       "pos": [
-        444,
-        234
+        1308,
+        193
       ],
       "size": {
-        "0": 315,
-        "1": 314
+        "0": 210,
+        "1": 586
       },
       "flags": {},
-      "order": 2,
+      "order": 6,
       "mode": 0,
-      "outputs": [
+      "inputs": [
         {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            15
-          ],
-          "shape": 3,
-          "slot_index": 0
+          "name": "anything_1",
+          "type": "STRING",
+          "link": 14,
+          "label": "anything_1"
         },
         {
-          "name": "MASK",
-          "type": "MASK",
-          "links": null,
-          "shape": 3
+          "name": "anything_2",
+          "type": "*",
+          "link": null
         }
       ],
       "properties": {
-        "Node name for S&R": "LoadImage"
+        "Node name for S&R": "Debug (mtb)"
       },
       "widgets_values": [
-        "1.png",
-        "image"
+        false
       ]
     }
   ],
@@ -255,16 +362,32 @@
       "*"
     ],
     [
-      15,
+      17,
       3,
+      0,
+      8,
+      0,
+      "IMAGE"
+    ],
+    [
+      18,
+      8,
       0,
       7,
       2,
       "IMAGE"
     ],
     [
-      16,
+      19,
       4,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      20,
+      9,
       0,
       7,
       3,

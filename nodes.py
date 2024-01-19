@@ -76,9 +76,86 @@ class LightGlueSimple:
 
         return (json.dumps(trajs.tolist()),matches,points0,points1,)
 
+class LightGlueSimpleMulti:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "extractor": ("SuperPoint",),
+                "matcher": ("LightGlue",),
+                "images": ("IMAGE",),
+                "device": (DEVICE, {"default":"cuda"}),
+            }
+        }
+
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("motionbrush",)
+    FUNCTION = "run_inference"
+    CATEGORY = "LightGlue"
+
+    def run_inference(self,extractor,matcher,images,device):
+        from .lightglue.utils import load_image,load_pilimage, rbd
+
+        featses=[]
+        matcheses=[]
+        trajs=[]
+        points0s=[]
+        points1s=[]
+        pointsnotuse=[]
+        pointsuse=[]
+        
+        for image in images:
+            image = 255.0 * image.cpu().numpy()
+            image = Image.fromarray(np.clip(image, 0, 255).astype(np.uint8))
+            image=load_pilimage(image).to(device)
+            feats = extractor.extract(image)
+            featses.append(feats)
+            if len(featses)>1:
+                matches = matcher({'image0': featses[0], 'image1': feats})
+                feats0, feats1, matches = [rbd(x) for x in [featses[0], feats, matches]]  # remove batch dimension
+                matches = matches['matches']
+                #print(f'{matches}')
+                #print(f'{featses[0]}')
+                points0 = feats0['keypoints'][matches[..., 0]]
+                points1 = feats1['keypoints'][matches[..., 1]]
+
+                matcheses.append(matches.tolist())
+                points0s.append(points0.tolist())
+                points1s.append(points1.tolist())
+
+                if len(featses)==2:
+                    pointsuse=matches[:,0].tolist()
+                else:
+                    pu=False
+                    mlist=matches[:,0].tolist()
+                    for puitem in pointsuse:
+                        if puitem not in mlist:
+                            pointsnotuse.append(puitem)
+
+        muses=[]
+        for pitem in pointsuse:
+            if pitem not in pointsnotuse:
+                muses.append(pitem)
+        
+        for muse in muses:
+            trajs.append([])
+        #print(f'{muses}')
+        for imlist in range(len(matcheses)):
+            mlist=matcheses[imlist]
+            for imitem in range(len(mlist)):
+                mitem=mlist[imitem]
+                #print(f'{mitem}')
+                if mitem[0] in muses:
+                    trajs[muses.index(mitem[0])].append(points0s[imlist][imitem])
+                    if imlist==len(matcheses)-1:
+                        trajs[muses.index(mitem[0])].append(points1s[imlist][imitem])
+
+        return (json.dumps(trajs),)
+
 
 NODE_CLASS_MAPPINGS = {
     "LightGlue Loader":LightGlueLoader,
     "LightGlue Simple":LightGlueSimple,
+    "LightGlue Simple Multi":LightGlueSimpleMulti,
 }
 
