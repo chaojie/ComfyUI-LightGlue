@@ -119,9 +119,6 @@ class LightGlueSimpleMulti:
                 points0 = feats0['keypoints'][matches[..., 0]]
                 points1 = feats1['keypoints'][matches[..., 1]]
 
-                matcheses.append(matches.tolist())
-                points0s.append(points0.tolist())
-                points1s.append(points1.tolist())
 
                 if len(featses)==2:
                     pointsuse=matches[:,0].tolist()
@@ -131,6 +128,12 @@ class LightGlueSimpleMulti:
                     for puitem in pointsuse:
                         if puitem not in mlist:
                             pointsnotuse.append(puitem)
+                            
+                points0s.append(points0.tolist())
+                points1s.append(points1.tolist())
+                matcheses.append(matches.tolist())
+
+
 
         muses=[]
         for pitem in pointsuse:
@@ -146,8 +149,10 @@ class LightGlueSimpleMulti:
                 mitem=mlist[imitem]
                 #print(f'{mitem}')
                 if mitem[0] in muses:
-                    trajs[muses.index(mitem[0])].append(points0s[imlist][imitem])
-                    if imlist==len(matcheses)-1:
+                    if imlist==0:
+                        trajs[muses.index(mitem[0])].append(points0s[imlist][imitem])
+                        trajs[muses.index(mitem[0])].append(points1s[imlist][imitem])
+                    else:
                         trajs[muses.index(mitem[0])].append(points1s[imlist][imitem])
 
         return (json.dumps(trajs),)
