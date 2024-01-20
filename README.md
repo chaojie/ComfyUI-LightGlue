@@ -21,3 +21,7 @@ LightGlueMotionBrush & DragNUWA
 <img src="assets/wf_motionbrush.png" raw=true>
 
 https://github.com/chaojie/ComfyUI-LightGlue/blob/main/workflow_lightgluemotionbrush.json
+
+## Tools
+
+[Motion Brush Visualization Tool](https://chaojie.github.io/ComfyUI-LightGlue/tools/draw.html)
