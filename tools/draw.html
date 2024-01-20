@@ -36,12 +36,16 @@
 		var userDrawnPixels = [];
 
 		function drawtrajs(){
-			ctx.fillStyle = "lightgrey";
 			ctx.lineCap = "round";
 			ctx.lineJoin = "round";
-			ctx.lineWidth = 6;
+			ctx.lineWidth = 1;
 			lines=JSON.parse(document.getElementById('traj').value);
 			lines.forEach((line,iline) => {
+				var randomColor = Math.floor(Math.random()*16777215).toString(16);
+				if((''+randomColor).length<6) randomColor=randomColor+'0';
+				console.log(randomColor);
+				ctx.fillStyle = '#'+randomColor;
+				ctx.strokeStyle = '#'+randomColor;
 				ctx.beginPath();
 				if(line.length>0&&line[0].length>1){
 					line.forEach((pt,ipt)=>{
