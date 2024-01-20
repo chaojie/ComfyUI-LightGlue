@@ -11,6 +11,8 @@ class LightGlueLoader:
         return {
             "required": {
                 "device": (DEVICE, {"default":"cuda"}),
+                "max_num_keypoints":("INT", {"default": 2048}),
+                "filter_threshold": ("FLOAT", {"default": 0.1, "min": 0.0, "max": 1.0, "step": 0.01}),
             }
         }
         
@@ -19,12 +21,12 @@ class LightGlueLoader:
     FUNCTION = "load_checkpoint"
     CATEGORY = "LightGlue"
 
-    def load_checkpoint(self,device):
+    def load_checkpoint(self,device,max_num_keypoints,filter_threshold):
         from .lightglue import LightGlue, SuperPoint
 
         # SuperPoint+LightGlue
-        extractor = SuperPoint(max_num_keypoints=2048).eval().to(device)  # load the extractor
-        matcher = LightGlue(features='superpoint').eval().to(device)  # load the matcher
+        extractor = SuperPoint(max_num_keypoints=max_num_keypoints).eval().to(device)  # load the extractor
+        matcher = LightGlue(features='superpoint',filter_threshold=filter_threshold).eval().to(device)  # load the matcher
 
         return (extractor,matcher,)
 
