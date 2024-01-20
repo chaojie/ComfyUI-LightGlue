@@ -85,6 +85,7 @@ class LightGlueSimpleMulti:
                 "matcher": ("LightGlue",),
                 "images": ("IMAGE",),
                 "device": (DEVICE, {"default":"cuda"}),
+                "scale": ("INT", {"default": 4}),
             }
         }
 
@@ -93,7 +94,7 @@ class LightGlueSimpleMulti:
     FUNCTION = "run_inference"
     CATEGORY = "LightGlue"
 
-    def run_inference(self,extractor,matcher,images,device):
+    def run_inference(self,extractor,matcher,images,device,scale):
         from .lightglue.utils import load_image,load_pilimage, rbd
 
         featses=[]
@@ -121,10 +122,10 @@ class LightGlueSimpleMulti:
 
 
                 if len(featses)==2:
-                    pointsuse=matches[:,0].tolist()
+                    pointsuse=(matches[:,0].detach().cpu().numpy()/scale).astype('int').tolist()
                 else:
                     pu=False
-                    mlist=matches[:,0].tolist()
+                    mlist=(matches[:,0].detach().cpu().numpy()/scale).astype('int').tolist()
                     for puitem in pointsuse:
                         if puitem not in mlist:
                             pointsnotuse.append(puitem)
@@ -147,15 +148,20 @@ class LightGlueSimpleMulti:
             mlist=matcheses[imlist]
             for imitem in range(len(mlist)):
                 mitem=mlist[imitem]
+                mitem0=(np.array(mitem[0])/scale).astype('int').tolist()
                 #print(f'{mitem}')
-                if mitem[0] in muses:
+                if mitem0 in muses:
                     if imlist==0:
-                        trajs[muses.index(mitem[0])].append(points0s[imlist][imitem])
-                        trajs[muses.index(mitem[0])].append(points1s[imlist][imitem])
+                        trajs[muses.index(mitem0)].append(points0s[imlist][imitem])
+                        trajs[muses.index(mitem0)].append(points1s[imlist][imitem])
                     else:
-                        trajs[muses.index(mitem[0])].append(points1s[imlist][imitem])
+                        trajs[muses.index(mitem0)].append(points1s[imlist][imitem])
 
-        return (json.dumps(trajs),)
+        ret=[]
+        for traj in trajs:
+            if len(traj)>1:
+                ret.append(traj)
+        return (json.dumps(ret),)
 
 
 NODE_CLASS_MAPPINGS = {
