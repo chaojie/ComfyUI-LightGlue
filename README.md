@@ -1,4 +1,4 @@
-# This is an ComfyUI implementation of LightGlue
+# This is an ComfyUI implementation of LightGlue to generate `MotionBrush` for DragNUWA
 
 [LightGlue](https://github.com/cvg/LightGlue)
 
