@@ -10,14 +10,14 @@
 
 ## Examples
 
-base workflow
-
-<img src="assets/wf_base.png" raw=true>
-
-https://github.com/chaojie/ComfyUI-LightGlue/blob/main/workflow.json
-
 video workflow
 
 <img src="assets/wf_video.png" raw=true>
 
 https://github.com/chaojie/ComfyUI-LightGlue/blob/main/workflow_video.json
+
+LightGlueMotionBrush & DragNUWA
+
+<img src="assets/wf_motionbrush.png" raw=true>
+
+https://github.com/chaojie/ComfyUI-LightGlue/blob/main/workflow_lightgluemotionbrush.json
